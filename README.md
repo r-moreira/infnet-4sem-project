@@ -66,4 +66,3 @@ pip install -r requirements.txt
 4. Run the Streamlit application:
 ```bash
 streamlit run src/demo_app.py
-```# infnet-4sem-project-tp2
