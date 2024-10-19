@@ -57,10 +57,12 @@ The project will use the following technologies:
 ## Running the Project
 To run the project, follow these steps:
 
-0. (Optional) Run with Docker Compose:
+Run with Docker Compose (Recomended):
 ```bash
 docker-compose up --build
 ```
+
+Or else:
 
 1. Set python version to 3.11.9:
 ```bash
@@ -87,3 +89,7 @@ streamlit run frontend/src/app.py
 
 # From root directory
 uvicorn backend.src.app:app --reload
+```
+
+## Accessing the Application
+Access the application at http://localhost:8501
