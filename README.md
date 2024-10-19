@@ -50,6 +50,9 @@ The project will use the following technologies:
 │   └── pages
 ├── README.md
 ├── docker-compose.yml
+├── .streamlit
+│   ├── external
+│   └── processed
 ├── .gitignore
 └── .env
 ```

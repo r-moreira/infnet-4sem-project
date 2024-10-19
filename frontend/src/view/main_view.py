@@ -2,6 +2,9 @@ from view.abstract_view import AbstractView
 from utils.streamlit_utils import StreamlitUtils
 from view.api_key_view import ApiKeyView
 from view.chat_view import ChatCallbackProvider
+import os
+import requests
+import streamlit as st
 
 class MainView(AbstractView):
     def __init__(
@@ -23,6 +26,14 @@ class MainView(AbstractView):
         StreamlitUtils.setup_page_config()
         
         app_mode = self._sidebar_view.show()
+
+        backend_url = os.getenv('BACKEND_URL', 'http://localhost:8000')
+
+        response = requests.get(f"{backend_url}/hello")
+        data = response.json()
+
+
+        st.write(f"Backend data: {data}")
         
         if app_mode == "Album Analisys":
             self._album_analysis_view.show()

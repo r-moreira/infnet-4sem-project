@@ -10,8 +10,12 @@ services:
     volumes:
       - ./frontend:/app
       - ./data:/app/data
+      - ./.streamlit:/app/.streamlit
     environment:
       - PYTHONUNBUFFERED=1
+      - BACKEND_URL=http://backend_app:8000
+    depends_on:
+      - backend_app
 
   backend_app:
     build:
