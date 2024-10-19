@@ -29,6 +29,14 @@ The project will use the following technologies:
 
 #### Project Structure:
 ```
+├── backend
+│   ├── src
+│   ├── requirements.txt
+│   └── Dockerfile
+├── frontend
+│   ├── src
+│   ├── requirements.txt
+│   └── Dockerfile
 ├── data
 │   ├── external
 │   ├── processed
@@ -41,8 +49,7 @@ The project will use the following technologies:
 ├── src
 │   └── pages
 ├── README.md
-├── requirements.txt
-├── Dockerfile
+├── docker-compose.yml
 ├── .gitignore
 └── .env
 ```
@@ -50,29 +57,33 @@ The project will use the following technologies:
 ## Running the Project
 To run the project, follow these steps:
 
+0. (Optional) Run with Docker Compose:
+```bash
+docker-compose up --build
+```
+
 1. Set python version to 3.11.9:
 ```bash
 pyenv local 3.11.9
 ```
 
-2. Create a virtual environment:
+2. Create a virtual environment for backend and frontend, activate and install the required libraries:
 ```bash
-python -m venv venv
+# From root directory
+python3 -m venv backend/.venv
+source backend/.venv/bin/activate
+pip install -r backend/requirements.txt
 
-source venv/bin/activate
+# From root directory
+python3 -m venv frontend/.venv
+source frontend/.venv/bin/activate
+pip install -r frontend/requirements.txt
 ```
 
-3. Install the required libraries:
+3. Run applications:
 ```bash
-pip install -r requirements.txt
-```
+# From root directory
+streamlit run frontend/src/app.py
 
-4. Run the Streamlit application:
-```bash
-streamlit run src/app.py
-```
-
-5. (Optional) Run with Docker:
-```bash
-docker-compose up --build
-```
+# From root directory
+uvicorn backend.src.app:app --reload

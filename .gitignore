@@ -3,6 +3,8 @@
 .python-version
 .env
 
+.vscode
+
 todos.md
 
 # Byte-compiled / optimized / DLL files
