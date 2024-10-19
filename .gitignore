@@ -3,7 +3,7 @@
 .python-version
 .env
 
-.vscode
+.vscode/settings.json
 
 todos.md
 

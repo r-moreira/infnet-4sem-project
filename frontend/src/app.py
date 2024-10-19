@@ -48,7 +48,14 @@ if __name__ == "__main__":
     container = Container()
     container.wire(modules=[__name__])
     
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.FileHandler("app.log"),
+            logging.StreamHandler()
+        ]
+    )
     
     nltk.download('punkt_tab')
     nltk.download('stopwords')

@@ -51,8 +51,8 @@ The project will use the following technologies:
 ├── README.md
 ├── docker-compose.yml
 ├── .streamlit
-│   ├── external
-│   └── processed
+│   ├── config.toml
+│   └── secrets.toml
 ├── .gitignore
 └── .env
 ```
@@ -91,7 +91,7 @@ pip install -r frontend/requirements.txt
 streamlit run frontend/src/app.py
 
 # From root directory
-uvicorn backend.src.app:app --reload
+PYTHONPATH=./backend/src uvicorn backend.src.app:app --reload
 ```
 
 ## Accessing the Application

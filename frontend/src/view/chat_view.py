@@ -38,7 +38,7 @@ class ChatView(AbstractView):
             st.session_state.messages.append({"role": "user", "content": prompt})
             st.chat_message("user").write(prompt)
             
-            message: str = _self._chat_view.open_ai_client_service.get_chat_response(st.session_state.messages)
+            message: str = _self._chat_view.open_ai_client_service.get_backend_chat_response(st.session_state.messages)
             
             st.session_state.messages.append({"role": "assistant", "content": message})
             st.chat_message("assistant").write(message)
