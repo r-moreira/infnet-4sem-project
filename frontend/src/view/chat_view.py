@@ -19,8 +19,6 @@ class ChatView(AbstractView):
             st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
 
     def show(self, on_chat_submit: callable) -> None:
-        self.open_ai_client_service.setup_open_ai_client()   
-        
         st.title("💬 Chatbot")
         for message in st.session_state.messages:
             st.chat_message(message["role"]).write(message["content"])

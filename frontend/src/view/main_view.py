@@ -26,14 +26,6 @@ class MainView(AbstractView):
         StreamlitUtils.setup_page_config()
         
         app_mode = self._sidebar_view.show()
-
-        backend_url = os.getenv('BACKEND_URL', 'http://localhost:8000')
-
-        response = requests.get(f"{backend_url}/hello")
-        data = response.json()
-
-
-        st.write(f"Backend data: {data}")
         
         if app_mode == "Album Analisys":
             self._album_analysis_view.show()
