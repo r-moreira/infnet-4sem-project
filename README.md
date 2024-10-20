@@ -80,12 +80,16 @@ pyenv local 3.11.9
 ```bash
 # From root directory
 python3 -m venv backend/.venv
+
 source backend/.venv/bin/activate
+
 pip install -r backend/requirements.txt
 
 # From root directory
 python3 -m venv frontend/.venv
+
 source frontend/.venv/bin/activate
+
 pip install -r frontend/requirements.txt
 ```
 
