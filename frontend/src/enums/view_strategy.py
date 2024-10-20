@@ -3,6 +3,7 @@ from enum import Enum
 
 class ViewStrategy(Enum):
     ALBUM_ANALYSIS = "Album Analysis"
+    SONG_ANALYSIS = "Song Analysis (Beta)"
     CHAT = "Chat (Beta)"
     
     @staticmethod

@@ -1,11 +1,11 @@
 import streamlit as st
-from service.openai_client_service import OpenAIClientService
+from service.http_client_service import HttpClientService
 from view.abstract_strategy_view import AbstractStrategyView
 from enums.view_strategy import ViewStrategy
 
 class ChatView(AbstractStrategyView):
-    def __init__(self, open_ai_client_service: OpenAIClientService) -> None:
-        self.open_ai_client_service = open_ai_client_service
+    def __init__(self, http_client_service: HttpClientService) -> None:
+        self._http_client_service = http_client_service
         self._api_key = st.secrets.get("OPEN_AI_API_KEY")
         self.__initialize_session_state()
 
@@ -31,7 +31,7 @@ class ChatView(AbstractStrategyView):
         st.session_state.messages.append({"role": "user", "content": prompt})
         st.chat_message("user").write(prompt)
         
-        message: str = _self.open_ai_client_service.get_backend_chat_response(st.session_state.messages)
+        message: str = _self._http_client_service.get_chat_response(st.session_state.messages)
         
         st.session_state.messages.append({"role": "assistant", "content": message})
         st.chat_message("assistant").write(message)

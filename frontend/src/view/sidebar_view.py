@@ -20,6 +20,7 @@ class SidebarView(AbstractView):
                 ViewStrategy.to_value_list(), 
                 icons=[
                     'music-note-list',
+                    'music-note-beamed',
                     'chat'
                 ],
                 menu_icon="cast", 

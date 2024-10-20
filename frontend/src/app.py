@@ -1,26 +1,31 @@
 import logging
 import nltk
-from service.openai_client_service import OpenAIClientService
+from service.http_client_service import HttpClientService
 from dependency_injector import containers, providers
 from dependency_injector.wiring import Provide, inject
 from view.sidebar_view import SidebarView
 from view.chat_view import ChatView
 from view.main_view import MainView
 from view.album_analysis_view import AlbumAnalysisView
-
+from view.song_analysis_view import SongAnalysisView
 
 class Container(containers.DeclarativeContainer):
     config = providers.Configuration()
 
-    open_ai_client_service = providers.Singleton(OpenAIClientService)
+    http_client_service = providers.Singleton(HttpClientService)
     
     sidebar_view = providers.Singleton(SidebarView)
     
     album_analysis_view = providers.Singleton(AlbumAnalysisView)
     
+    song_analysis_view = providers.Singleton(
+            SongAnalysisView,
+            http_client_service=http_client_service
+        )
+    
     chat_view = providers.Singleton(
         ChatView,
-        open_ai_client_service=open_ai_client_service
+        http_client_service=http_client_service
     )
 
     main_view = providers.Singleton(
@@ -28,7 +33,8 @@ class Container(containers.DeclarativeContainer):
         sidebar_view=sidebar_view,
         strategy_view_list=providers.List(
             album_analysis_view,
-            chat_view
+            chat_view,
+            song_analysis_view
         )
     )
 
