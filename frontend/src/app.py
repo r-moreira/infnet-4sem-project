@@ -1,6 +1,7 @@
 import logging
 import nltk
 from service.http_client_service import HttpClientService
+from service.session_state_service import SessionStateService
 from dependency_injector import containers, providers
 from dependency_injector.wiring import Provide, inject
 from view.sidebar_view import SidebarView
@@ -12,9 +13,13 @@ from view.song_analysis_view import SongAnalysisView
 class Container(containers.DeclarativeContainer):
     config = providers.Configuration()
 
+    session_state_service = providers.Singleton(SessionStateService)
+
     http_client_service = providers.Singleton(HttpClientService)
     
-    sidebar_view = providers.Singleton(SidebarView)
+    sidebar_view = providers.Singleton(
+        SidebarView,
+        session_state_service=session_state_service)
     
     album_analysis_view = providers.Singleton(AlbumAnalysisView)
     

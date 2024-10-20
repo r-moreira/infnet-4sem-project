@@ -14,6 +14,16 @@
     
 The data documentation with example data for the Spotify API can be found [here](https://developer.spotify.com/documentation/web-api/).
 
+* **Genius API**
+  
+    * **Data Description**: The Genius API provides access to song information and links to lyrics on the Genius platform. (The API does not provide the lyrics directly.)
+    
+    * **Data Volume**: The API can return large amounts of data depending on the search query.
+    
+    * **Data Frequency**: The API can be queried in real-time to retrieve the latest song lyrics and metadata.
+    
+    * **Data Quality**: The data quality from the Genius API is generally high, as it comes directly from the Genius platform.
+
 * **Web Scraping for Lyrics**:
         
     * **Data Description**: Web scraping will be used to extract song lyrics from websites.

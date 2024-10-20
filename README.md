@@ -1,6 +1,7 @@
 # DEEPLISTEN
 
 ## ⚠️ Avisos ao Professor: 
+* Para este TP, o projeto passou a ter backend e frontend separados, portanto, não é possível fazer o deploy no Streamlit Community Cloud. Para rodar o projeto, siga as instruções.
 
 * Dirija-se ao notebook `genius_webscrapping` dentro do diretório ```./notebook``` para acessar o código de webscrapping utilizado para gerar o arquivo para upload no streamlit.
 
@@ -9,6 +10,8 @@
 * Dirija-se ao diretório `data/processed` para acessar os arquivos de dados processados através de webscrapping para upload no streamlit.
  
 * Para testar o chat é necessário uma API Key da Open AI, que pode ser obtida em [Tutorial como criar API Key](https://hub.asimov.academy/tutorial/como-gerar-uma-api-key-na-openai/), posso disponibilizar a minha caso necessário. De qualquer forma, disponibilizei um print do chat em funcionamento no diretório `images`.
+
+* Foi implementado a chamada de API do Genius.com, para trazer informações relacionadas a música. Porém, a API não fornece a letra da música. Para isso, será utilizado webscrapping nos próximos passos.
 
 ## Project Description
 The problem that the project aims to solve is to help ethnomusicology professionals access music information more easily and quickly using artificial intelligence, so they can conduct their research more efficiently, aiding in the cataloging and research of music from different cultures. It can also be used by people who enjoy music and want more detailed information about the songs they listen to.
