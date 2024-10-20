@@ -1,17 +1,20 @@
 import streamlit as st
 from service.http_client_service import HttpClientService
+from service.session_state_service import SessionStateService
 from view.abstract_strategy_view import AbstractStrategyView
 from enums.view_strategy import ViewStrategy
+import logging
 
 class ChatView(AbstractStrategyView):
-    def __init__(self, http_client_service: HttpClientService) -> None:
+    logger = logging.getLogger(__name__)
+    
+    def __init__(self, 
+                 session_state_service: SessionStateService,
+                 http_client_service: HttpClientService) -> None:
         self._http_client_service = http_client_service
         self._api_key = st.secrets.get("OPEN_AI_API_KEY")
-        self.__initialize_session_state()
-
-    def __initialize_session_state(self) -> None:
-        if "messages" not in st.session_state:
-            st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+        self._session_state_service = session_state_service
+        self._session_state_service.initialize_chat_session()
 
     def accept(self, view: ViewStrategy) -> bool:
         return view == ViewStrategy.CHAT
@@ -28,12 +31,14 @@ class ChatView(AbstractStrategyView):
 
     @st.cache_data(show_spinner=False)
     def _on_chat_submit(_self, prompt: str) -> None:
-        st.session_state.messages.append({"role": "user", "content": prompt})
+        _self._session_state_service.append_user_chat_message(prompt)
+        
         st.chat_message("user").write(prompt)
         
         message: str = _self._http_client_service.get_chat_response(st.session_state.messages)
         
-        st.session_state.messages.append({"role": "assistant", "content": message})
+        _self._session_state_service.append_assistant_chat_message(message)
+        
         st.chat_message("assistant").write(message)
 
     def _handle_api_key(self) -> None:

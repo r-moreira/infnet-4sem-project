@@ -30,6 +30,7 @@ class Container(containers.DeclarativeContainer):
     
     chat_view = providers.Singleton(
         ChatView,
+        session_state_service=session_state_service,
         http_client_service=http_client_service
     )
 

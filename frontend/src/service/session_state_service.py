@@ -21,3 +21,14 @@ class SessionStateService:
 
     def is_view_menu_option(self) -> bool:
         return "sidebar_menu_option" in st.session_state
+    
+    def initialize_chat_session(self) -> None:
+        if "messages" not in st.session_state:
+            st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+            
+    def append_user_chat_message(self, message: str) -> None:
+        st.session_state.messages.append({"role": "user", "content": message})
+        
+    def append_assistant_chat_message(self, message: str) -> None:
+        st.session_state.messages.append({"role": "assistant", "content": message})
+    
