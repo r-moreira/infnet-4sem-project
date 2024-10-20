@@ -32,3 +32,14 @@ class SessionStateService:
     def append_assistant_chat_message(self, message: str) -> None:
         st.session_state.messages.append({"role": "assistant", "content": message})
     
+    def initialize_openai_api_key_handler(self) -> None:
+        if "api_key_set" not in st.session_state:
+            st.session_state["api_key_set"] = False
+            st.session_state["api_key"] = None
+    
+    def set_openai_api_key(self, api_key: str) -> None:
+        st.session_state["api_key"] = api_key
+        st.session_state["api_key_set"] = True
+        
+    def get_openai_api_key(self) -> str:
+        return st.session_state["api_key"]

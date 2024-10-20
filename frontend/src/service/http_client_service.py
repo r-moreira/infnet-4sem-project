@@ -17,12 +17,12 @@ class HttpClientService:
     def __init__(self):
         self._url = os.environ.get('BACKEND_URL', 'http://localhost:8000')
     
-    def get_chat_response(self, messages: List[Dict[str, str]]) -> str:    
+    def get_chat_response(self, messages: List[Dict[str, str]], api_key: str) -> str:    
         headers = {
             'Content-Type': 'application/json'
         }
         data = {
-            "api_key": st.session_state["api_key"],
+            "api_key": api_key,
             "messages": messages
         }
         
