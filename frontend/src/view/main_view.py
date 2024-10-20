@@ -1,34 +1,27 @@
+from typing import List
+from enums.view_strategy import ViewStrategy
 from view.abstract_view import AbstractView
 from utils.streamlit_utils import StreamlitUtils
-from view.api_key_view import ApiKeyView
-from view.chat_view import ChatCallbackProvider
-import os
-import requests
-import streamlit as st
+from view.abstract_view import AbstractView
+from view.abstract_strategy_view import AbstractStrategyView
 
 class MainView(AbstractView):
     def __init__(
         self, 
         sidebar_view: AbstractView,
-        album_analysis_view: AbstractView,
-        api_key_view: AbstractView,
-        chat_view: AbstractView,
-        chat_view_callbacks: ChatCallbackProvider,
+        strategy_view_list: List[AbstractStrategyView]
         ) -> None:
         
         self._sidebar_view = sidebar_view
-        self._album_analysis_view = album_analysis_view
-        self._chat_view = chat_view
-        self._chat_view_callbacks = chat_view_callbacks
-        self._api_key_view = api_key_view
+        self._strategy_view_list = strategy_view_list
         
     def show(self) -> None:
         StreamlitUtils.setup_page_config()
         
-        app_mode = self._sidebar_view.show()
+        # Strategy pattern
+        strategy: ViewStrategy = self._sidebar_view.show()
         
-        if app_mode == "Album Analisys":
-            self._album_analysis_view.show()
-        else:
-            self._api_key_view.show()
-            self._chat_view.show(self._chat_view_callbacks.on_chat_submit)
+        for strategy_view in self._strategy_view_list:
+            if strategy_view.accept(strategy):
+                strategy_view.show()
+                break

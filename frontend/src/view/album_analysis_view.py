@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 import re
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-from view.abstract_view import AbstractView
+from view.abstract_strategy_view import AbstractStrategyView
+from enums.view_strategy import ViewStrategy
 
 DEFAULT_ALBUM = "data/processed/albums_collection_lyrics.csv"
 
@@ -19,9 +20,12 @@ CSV_FILE_SCHEMA = """
 
 EXPECTED_COLUMNS = ["album_name", "artist_name", "song_name", "lyrics"]
 
-class AlbumAnalysisView(AbstractView):
+class AlbumAnalysisView(AbstractStrategyView):
     def __init__(self) -> None:
         self._album_data = pd.DataFrame()
+    
+    def accept(self, view: ViewStrategy) -> bool:
+        return view == ViewStrategy.ALBUM_ANALYSIS
                 
     def show(self) -> None:
         self._display_header()

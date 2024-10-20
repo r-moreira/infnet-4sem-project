@@ -6,7 +6,6 @@ from dependency_injector.wiring import Provide, inject
 from view.sidebar_view import SidebarView
 from view.chat_view import ChatView
 from view.main_view import MainView
-from view.api_key_view import ApiKeyView
 from view.album_analysis_view import AlbumAnalysisView
 
 
@@ -19,25 +18,18 @@ class Container(containers.DeclarativeContainer):
     
     album_analysis_view = providers.Singleton(AlbumAnalysisView)
     
-    api_key_view = providers.Singleton(ApiKeyView)
-    
     chat_view = providers.Singleton(
         ChatView,
         open_ai_client_service=open_ai_client_service
-    )
-    
-    chat_view_callbacks = providers.Singleton(
-        ChatView.Callbacks,
-        chat_view=chat_view
     )
 
     main_view = providers.Singleton(
         MainView,
         sidebar_view=sidebar_view,
-        album_analysis_view=album_analysis_view,
-        api_key_view=api_key_view,
-        chat_view=chat_view,
-        chat_view_callbacks=chat_view_callbacks
+        strategy_view_list=providers.List(
+            album_analysis_view,
+            chat_view
+        )
     )
 
 @inject

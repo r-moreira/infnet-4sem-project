@@ -15,7 +15,7 @@ class OpenAIClientSetupError(Exception):
 class OpenAIClientService:            
     def get_backend_chat_response(self, messages: List[Dict[str, str]]) -> str:
         url = os.environ.get('BACKEND_URL', 'http://localhost:8000')
-         
+        
         headers = {
             'Content-Type': 'application/json'
         }
