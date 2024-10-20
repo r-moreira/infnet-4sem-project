@@ -13,6 +13,10 @@ class SongAnalysisView(AbstractStrategyView):
     def show(self) -> None:
         st.title("🎵 Song Analysis")
         
+        st.write("More features coming soon!")
+        
+        st.divider()
+        
         song_name = st.text_input("Search for a song", key="song_search")
         
         if song_name:
