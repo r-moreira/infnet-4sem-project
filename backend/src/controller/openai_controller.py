@@ -11,10 +11,10 @@ class OpenAiController:
         self.router.add_api_route("/health", self.health_check, methods=["GET"])
         self.router.add_api_route("/chat", self.get_chat_response, methods=["POST"])
 
-    def health_check(self) -> Dict:
+    async def health_check(self) -> Dict:
         return {"Status": "UP"}
     
-    def get_chat_response(self, request: ChatRequest) -> ChatResponse:
+    async def get_chat_response(self, request: ChatRequest) -> ChatResponse:
         try:
             response = self._openai_client_service.get_chat_response(request.messages, request.api_key)
             return {"message": response}
