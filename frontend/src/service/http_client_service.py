@@ -26,7 +26,7 @@ class HttpClientService:
             "messages": messages
         }
         
-        HttpClientService.logger.info(f"Sending chat request to {self._url}/chat")
+        self.logger.info(f"Sending chat request to {self._url}/chat")
         
         response = requests.post(f"{self._url}/chat", headers=headers, json=data)
 
@@ -40,7 +40,7 @@ class HttpClientService:
         encoded_query = urlencode({"query": query})
         url = f"{self._url}/genius/search?{encoded_query}"
         
-        HttpClientService.logger.info(f"Sending genius search request to {url}")
+        self.logger.info(f"Sending genius search request to {url}")
         response = requests.get(url)  
             
         if response.status_code == 200:
@@ -52,11 +52,27 @@ class HttpClientService:
     def get_playlist(self, url: str) -> Dict:
         url = f"{self._url}/spotify/playlist?url={url}"
         
-        HttpClientService.logger.info(f"Sending playlist request to {url}")
+        self.logger.info(f"Sending playlist request to {url}")
         response = requests.get(url)  
             
         if response.status_code == 200:
             return response.json()
         else:
-            HttpClientService.logger.error(f"Failed to get playlist: {response.status_code} - {response.text}")
+            self.logger.error(f"Failed to get playlist: {response.status_code} - {response.text}")
             raise HttpClientError(f"Failed to get playlist")
+        
+    def get_audio_features(self, track_ids: List[str]) -> List[Dict]:
+        url = f"{self._url}/spotify/audio-features"
+        
+        self.logger.info(f"Sending audio features requests to {url}")
+        
+        response = requests.post(url=url, json={"track_ids": track_ids})
+        
+        if response.status_code == 200:
+            return response.json()
+        else:
+            self.logger.error(f"Failed to get audio features: {response.status_code} - {response.text}")
+            raise HttpClientError(f"Failed to get audio features")
+        
+        
+        

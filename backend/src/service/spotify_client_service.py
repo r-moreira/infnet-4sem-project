@@ -41,5 +41,5 @@ class SpotifyClientService:
     
     def get_audio_features(self, track_id_list: List[str]) -> List[AudioFeatures] | None:
         self.logger.info(f"Getting track info from {track_id_list}")
-        track = self._sp.audio_features(track_id_list)
+        track = self._sp.audio_features(track_id_list)        
         return track

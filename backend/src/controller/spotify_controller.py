@@ -4,7 +4,6 @@ from typing import Dict, List, Any
 from model.spotify import Playlist, TrackIdsRequest, AudioFeatures
 
 class SpotifyController:
-    
     def __init__(self, spotify_client_service: SpotifyClientService) -> None:
         self.spotify_client_service = spotify_client_service
         self.router = APIRouter(prefix="/spotify")
