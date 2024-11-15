@@ -48,3 +48,15 @@ class HttpClientService:
         else:
             HttpClientService.logger.error(f"Failed to get genius search: {response.status_code} - {response.text}")
             raise HttpClientError(f"Failed to get genius search")
+        
+    def get_playlist(self, url: str) -> Dict:
+        url = f"{self._url}/spotify/playlist?url={url}"
+        
+        HttpClientService.logger.info(f"Sending playlist request to {url}")
+        response = requests.get(url)  
+            
+        if response.status_code == 200:
+            return response.json()
+        else:
+            HttpClientService.logger.error(f"Failed to get playlist: {response.status_code} - {response.text}")
+            raise HttpClientError(f"Failed to get playlist")

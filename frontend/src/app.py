@@ -9,6 +9,7 @@ from view.chat_view import ChatView
 from view.main_view import MainView
 from view.album_analysis_view import AlbumAnalysisView
 from view.song_analysis_view import SongAnalysisView
+from view.playlist_view import PlaylistView
 
 class Container(containers.DeclarativeContainer):
     config = providers.Configuration()
@@ -34,13 +35,20 @@ class Container(containers.DeclarativeContainer):
         http_client_service=http_client_service
     )
 
+    playlist_view = providers.Singleton(
+        PlaylistView,
+        session_state_service=session_state_service,
+        http_client_service=http_client_service
+    )
+
     main_view = providers.Singleton(
         MainView,
         sidebar_view=sidebar_view,
         strategy_view_list=providers.List(
             album_analysis_view,
             chat_view,
-            song_analysis_view
+            song_analysis_view,
+            playlist_view
         )
     )
 
