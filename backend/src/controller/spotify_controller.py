@@ -1,7 +1,7 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Body
 from service.spotify_client_service import SpotifyClientService
-from typing import Dict, List
-from model.spotify import Playlist
+from typing import Dict, List, Any
+from model.spotify import Playlist, TrackIdsRequest, AudioFeatures
 
 class SpotifyController:
     
@@ -9,11 +9,17 @@ class SpotifyController:
         self.spotify_client_service = spotify_client_service
         self.router = APIRouter(prefix="/spotify")
         self.router.add_api_route("/playlist", self.get_playlist, methods=["GET"])
+        self.router.add_api_route("/audio-features", self.get_audio_features, methods=["POST"])
   
     async def get_playlist(self, url: str = Query(...)) -> Playlist:
         try:
-            playlist = self.spotify_client_service.get_playlist(url)
-            return playlist
+            return self.spotify_client_service.get_playlist(url)
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=str(e))
+        
+    async def get_audio_features(self, request: TrackIdsRequest = Body(...)) -> List[AudioFeatures]:
+        try:
+            return self.spotify_client_service.get_audio_features(request.track_ids)
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
         
