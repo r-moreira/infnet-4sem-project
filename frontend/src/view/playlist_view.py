@@ -46,11 +46,8 @@ class PlaylistView(AbstractStrategyView):
             self.show_audio_feature_statistics(metrics)
                         
             with st.spinner("Generating Explanation..."):
-                explanation = self._http_client_service.get_playlist_audio_features_explanation(
-                    playlist['name'],
-                    playlist['description'],
-                    metrics
-                )
+                explanation = self.get_cached_audio_features_explanation(playlist, metrics)
+                st.header("AI Generated Explanation:")
                 st.markdown(explanation)
             
             with st.expander("Audio Features Json"):
@@ -60,6 +57,14 @@ class PlaylistView(AbstractStrategyView):
                     data=str(audio_features),
                     file_name="audio_features.json",
                     mime="application/json"
+                )
+
+    @st.cache_data(ttl=3600, show_spinner=False)
+    def get_cached_audio_features_explanation(_self, playlist, metrics):
+        return _self._http_client_service.get_playlist_audio_features_explanation(
+                    playlist['name'],
+                    playlist['description'],
+                    metrics
                 )
 
     @st.cache_data(ttl=3600, show_spinner=True)
@@ -96,7 +101,7 @@ class PlaylistView(AbstractStrategyView):
         with col3:
             fig = go.Figure(go.Indicator(
                     mode = "gauge+number",
-                    value = abs(float(metrics["mean_loudness"])),
+                    value = float(metrics["mean_loudness"]),
                     title = {'text': "Mean Loudness (dB)"}))
             st.plotly_chart(fig, use_container_width=True)
         

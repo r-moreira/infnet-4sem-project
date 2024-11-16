@@ -20,11 +20,9 @@ class SidebarView(AbstractView):
             strategy: ViewStrategy = self._option_menu()
             
             st.divider()
-            
-            # st.markdown("This app is a chatbot that uses OpenAI's GPT-4 model to generate responses to analyze and discuss music.")
-            # st.markdown("The chat is in beta, it works, but like a normal Chat GPT chat, music features will be added soon.")
-            # st.markdown("The music features are also in beta, more features and UI improvements will be added soon.")
-           
+            st.markdown("🎵 **Deep Listen** is a powerful music analysis tool that leverages the Spotify API and advanced language models (LLMs)")
+            st.markdown("Discover detailed insights into the audio features of your favorite tracks and playlists, and gain a deeper understanding of the music you love.")
+          
             return strategy
        
     def _option_menu(self) -> ViewStrategy:
