@@ -2,7 +2,7 @@ from pydantic import BaseModel
 from typing import List, Dict, Optional
 
 def float_encoder(value: float) -> str:
-    return format(value, '.6f')
+    return format(value, '.3f')
 
 class Image(BaseModel):
     url: str
@@ -60,6 +60,11 @@ class AudioFeatures(BaseModel):
     analysis_url: Optional[str] = None
     duration_ms: int
     time_signature: int
+    
+    class Config:
+        json_encoders = {
+            float: float_encoder
+        }
     
 class AudioFeaturesModesCount(BaseModel):
     major: int

@@ -21,9 +21,9 @@ class SidebarView(AbstractView):
             
             st.divider()
             
-            st.markdown("This app is a chatbot that uses OpenAI's GPT-4 model to generate responses to analyze and discuss music.")
-            st.markdown("The chat is in beta, it works, but like a normal Chat GPT chat, music features will be added soon.")
-            st.markdown("The music features are also in beta, more features and UI improvements will be added soon.")
+            # st.markdown("This app is a chatbot that uses OpenAI's GPT-4 model to generate responses to analyze and discuss music.")
+            # st.markdown("The chat is in beta, it works, but like a normal Chat GPT chat, music features will be added soon.")
+            # st.markdown("The music features are also in beta, more features and UI improvements will be added soon.")
            
             return strategy
        

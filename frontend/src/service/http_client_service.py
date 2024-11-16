@@ -74,5 +74,24 @@ class HttpClientService:
             self.logger.error(f"Failed to get audio features: {response.status_code} - {response.text}")
             raise HttpClientError(f"Failed to get audio features")
         
+    def get_playlist_audio_features_explanation(
+            self,
+            playlist_name: str, 
+            playlist_description: str, 
+            audio_features: List[Dict]
+        ) -> str:        
+        self.logger.info(f"Sending playlist audio features explanation request to {self._url}/explanation/playlist")
+        
+        response = requests.post(f"{self._url}/explanation/playlist", json={
+            "name": playlist_name,
+            "description": playlist_description,
+            "metrics": audio_features
+        })
+        
+        if response.status_code == 200:
+            return response.json()["message"]
+        else:
+            self.logger.error(f"Failed to get playlist audio features explanation: {response.status_code} - {response.text}")
+            raise HttpClientError(f"Failed to get playlist audio features explanation")
         
         

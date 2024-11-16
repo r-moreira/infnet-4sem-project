@@ -42,7 +42,32 @@ class PlaylistView(AbstractStrategyView):
             track_ids = [item['track']['id'] for item in playlist['tracks']['items']]
             audio_features = self._http_client_service.get_audio_features(track_ids)                    
             metrics = audio_features['metrics']
-            mean_metrics = {
+            
+            self.show_audio_feature_statistics(metrics)
+                        
+            with st.spinner("Generating Explanation..."):
+                explanation = self._http_client_service.get_playlist_audio_features_explanation(
+                    playlist['name'],
+                    playlist['description'],
+                    metrics
+                )
+                st.markdown(explanation)
+            
+            with st.expander("Audio Features Json"):
+                st.write(audio_features)
+                st.download_button(
+                    label="Download",
+                    data=str(audio_features),
+                    file_name="audio_features.json",
+                    mime="application/json"
+                )
+
+    @st.cache_data(ttl=3600, show_spinner=True)
+    def get_cached_playlist(_self, url):
+        return _self._http_client_service.get_playlist(url)
+    
+    def show_audio_feature_statistics(self, metrics):
+        mean_metrics = {
                 "Danceability": float(metrics["mean_danceability"]),
                 "Energy": float(metrics["mean_energy"]),
                 "Speechiness": float(metrics["mean_speechiness"]),
@@ -51,16 +76,7 @@ class PlaylistView(AbstractStrategyView):
                 "Liveness": float(metrics["mean_liveness"]),
                 "Valence": float(metrics["mean_valence"]),
             }
-            
-            self.show_audio_feature_statistics(audio_features, metrics, mean_metrics)
-            
-
-
-    @st.cache_data(ttl=3600, show_spinner=True)
-    def get_cached_playlist(_self, url):
-        return _self._http_client_service.get_playlist(url)
-    
-    def show_audio_feature_statistics(self, audio_features, metrics, mean_metrics):
+        
         col1, col2, col3 = st.columns(3)
             
         with col1:
@@ -128,12 +144,3 @@ class PlaylistView(AbstractStrategyView):
                 color_discrete_sequence=px.colors.qualitative.Plotly
             )
         st.plotly_chart(fig)
-            
-        with st.expander("Audio Features Json"):
-            st.write(audio_features)
-            st.download_button(
-                    label="Download",
-                    data=str(audio_features),
-                    file_name="audio_features.json",
-                    mime="application/json"
-                )
