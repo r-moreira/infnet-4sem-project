@@ -37,7 +37,7 @@ class PlaylistView(AbstractStrategyView):
             with st.container():
                 st.components.v1.html(iframe_html, height=600)
             
-            st.write(playlist)
+            #st.write(playlist)
             
             track_ids = [item['track']['id'] for item in playlist['tracks']['items']]
             audio_features = self._http_client_service.get_audio_features(track_ids)            
