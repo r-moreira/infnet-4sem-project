@@ -53,11 +53,11 @@ class AudioFeatures(BaseModel):
     liveness: float
     valence: float
     tempo: float
-    type: str
-    id: str
-    uri: str
-    track_href: str
-    analysis_url: str
+    type: Optional[str] = None
+    id: Optional[str] = None
+    uri: Optional[str] = None
+    track_href: Optional[str] = None
+    analysis_url: Optional[str] = None
     duration_ms: int
     time_signature: int
     

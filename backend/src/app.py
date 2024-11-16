@@ -13,7 +13,9 @@ import os
 class Container(containers.DeclarativeContainer):
     config = providers.Configuration()
 
-    openai_client_service = providers.Singleton(OpenAIClientService)
+    openai_client_service = providers.Singleton(
+        OpenAIClientService,
+        config=config)
     
     genius_client_service = providers.Singleton(GeniusClientService)
     
