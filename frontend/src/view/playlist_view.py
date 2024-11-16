@@ -32,7 +32,7 @@ class PlaylistView(AbstractStrategyView):
             
             iframe_html = f"""
                 <div style="display: flex; justify-content: center;">
-                    <iframe src="https://open.spotify.com/embed/playlist/{playlist['id']}" width="600" height="600" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                    <iframe src="https://open.spotify.com/embed/playlist/{playlist['id']}" width="2000" height="600" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                 </div>
             """
             
@@ -53,9 +53,33 @@ class PlaylistView(AbstractStrategyView):
                 "Instrumentalness": float(metrics["mean_instrumentalness"]),
                 "Liveness": float(metrics["mean_liveness"]),
                 "Valence": float(metrics["mean_valence"]),
+                # "Duration (ms)": float(metrics["mean_duration_ms"]),
                 # "Tempo": float(metrics["mean_tempo"])
             }
             
+            col1, col2, col3 = st.columns(3)
+            
+            with col1:
+                fig = go.Figure(go.Indicator(
+                    mode = "gauge+number",
+                    value = float(metrics["mean_tempo"]),
+                    title = {'text': "Mean Tempo (BPM)"}))
+                st.plotly_chart(fig, use_container_width=True)   
+            
+            with col2:    
+                fig = go.Figure(go.Indicator(
+                    mode = "gauge+number",
+                    value = float(metrics["mean_duration_ms"]) / 1000,
+                    title = {'text': "Mean Duration (Seconds)"}))
+                st.plotly_chart(fig, use_container_width=True) 
+                
+            with col3:
+                fig = go.Figure(go.Indicator(
+                    mode = "gauge+number",
+                    value = abs(float(metrics["mean_loudness"])),
+                    title = {'text': "Mean Loudness (dB)"}))
+                st.plotly_chart(fig, use_container_width=True)
+        
             fig = px.bar(
                 x=list(mean_metrics.keys()), 
                 y=list(mean_metrics.values()), 
@@ -110,6 +134,6 @@ class PlaylistView(AbstractStrategyView):
                     mime="application/json"
                 )
 
-    @st.cache_data(ttl=600, show_spinner=True)
+    @st.cache_data(ttl=3600, show_spinner=True)
     def get_cached_playlist(_self, url):
         return _self._http_client_service.get_playlist(url)

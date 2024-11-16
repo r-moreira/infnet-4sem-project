@@ -37,9 +37,11 @@ class SidebarView(AbstractView):
             "Main Menu", 
             ViewStrategy.to_value_list(), 
             icons=[
-                'music-note-list',
-                'music-note-beamed',
-                'chat'
+                'house-fill',
+                'music-note-beamed'
+                # 'music-note-list',
+                # 'music-note-beamed',
+                # 'chat'
             ],
             menu_icon="cast", 
             default_index=menu_index if menu_index is not None else 0,

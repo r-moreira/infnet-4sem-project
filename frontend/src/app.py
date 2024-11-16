@@ -27,16 +27,16 @@ class Container(containers.DeclarativeContainer):
         ),
         strategy_view_list=providers.List(
             providers.Singleton(HomeView),
-            providers.Singleton(AlbumAnalysisView),
-            providers.Singleton(
-                ChatView,
-                session_state_service=session_state_service,
-                http_client_service=http_client_service
-            ),
-            providers.Singleton(
-                SongAnalysisView,
-                http_client_service=http_client_service
-            ),
+            # providers.Singleton(AlbumAnalysisView),
+            # providers.Singleton(
+            #     ChatView,
+            #     session_state_service=session_state_service,
+            #     http_client_service=http_client_service
+            # ),
+            # providers.Singleton(
+            #     SongAnalysisView,
+            #     http_client_service=http_client_service
+            # ),
             providers.Singleton(
                 PlaylistView,
                 session_state_service=session_state_service,
