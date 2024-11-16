@@ -1,7 +1,7 @@
 import openai
-from openai import OpenAI, OpenAIError, ChatCompletion
+from openai import OpenAI, OpenAIError
 from typing import List, Dict
-from model.spotify import AudioFeatures, PlaylistAudioFeaturesRequest
+from model.spotify import TrackAudioFeaturesRequest, PlaylistAudioFeaturesRequest
 
 class OpenAIClientError(Exception):
     def __init__(self, message: str) -> None:
@@ -84,9 +84,11 @@ class OpenAIClientService:
         except OpenAIError as e:
             raise OpenAIClientError(f"An error occurred: {e}")
     
-    def get_audio_features_explanation(self, audio_features: AudioFeatures) -> str:
+    def get_audio_features_explanation(self, track_audio_features_request: TrackAudioFeaturesRequest) -> str:
         openai.api_key = self._api_key
         client: OpenAI = openai 
+
+        audio_features = track_audio_features_request.audio_features
         
         prompt = f"""
         Provide a humanized explanation of the following Spotify audio features:

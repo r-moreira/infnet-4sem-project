@@ -3,7 +3,7 @@ from fastapi import APIRouter, HTTPException
 from service.openai_client_service import OpenAIClientService
 from model.chat_request import ChatRequest
 from model.chat_response import ChatResponse
-from model.spotify import AudioFeatures, PlaylistAudioFeaturesRequest
+from model.spotify import TrackAudioFeaturesRequest, PlaylistAudioFeaturesRequest
 
 class OpenAiController: 
     def __init__(self, openai_client_service: OpenAIClientService) -> None:
@@ -30,9 +30,9 @@ class OpenAiController:
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
         
-    async def get_audio_features_explanation(self, audio_features: AudioFeatures) -> ChatResponse:
+    async def get_audio_features_explanation(self, track_audio_features_request: TrackAudioFeaturesRequest) -> ChatResponse:
         try:
-            response = self._openai_client_service.get_audio_features_explanation(audio_features)
+            response = self._openai_client_service.get_audio_features_explanation(track_audio_features_request)
             return {"message": response}
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
