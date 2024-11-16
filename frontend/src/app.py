@@ -10,45 +10,38 @@ from view.main_view import MainView
 from view.album_analysis_view import AlbumAnalysisView
 from view.song_analysis_view import SongAnalysisView
 from view.playlist_view import PlaylistView
+from view.home_view import HomeView
 
 class Container(containers.DeclarativeContainer):
     config = providers.Configuration()
-
+    
     session_state_service = providers.Singleton(SessionStateService)
-
+    
     http_client_service = providers.Singleton(HttpClientService)
-    
-    sidebar_view = providers.Singleton(
-        SidebarView,
-        session_state_service=session_state_service)
-    
-    album_analysis_view = providers.Singleton(AlbumAnalysisView)
-    
-    song_analysis_view = providers.Singleton(
-            SongAnalysisView,
-            http_client_service=http_client_service
-        )
-    
-    chat_view = providers.Singleton(
-        ChatView,
-        session_state_service=session_state_service,
-        http_client_service=http_client_service
-    )
-
-    playlist_view = providers.Singleton(
-        PlaylistView,
-        session_state_service=session_state_service,
-        http_client_service=http_client_service
-    )
 
     main_view = providers.Singleton(
         MainView,
-        sidebar_view=sidebar_view,
+        sidebar_view=providers.Singleton(
+            SidebarView,
+            session_state_service=session_state_service
+        ),
         strategy_view_list=providers.List(
-            album_analysis_view,
-            chat_view,
-            song_analysis_view,
-            playlist_view
+            providers.Singleton(HomeView),
+            providers.Singleton(AlbumAnalysisView),
+            providers.Singleton(
+                ChatView,
+                session_state_service=session_state_service,
+                http_client_service=http_client_service
+            ),
+            providers.Singleton(
+                SongAnalysisView,
+                http_client_service=http_client_service
+            ),
+            providers.Singleton(
+                PlaylistView,
+                session_state_service=session_state_service,
+                http_client_service=http_client_service
+            )
         )
     )
 

@@ -42,10 +42,8 @@ class PlaylistView(AbstractStrategyView):
             track_ids = [item['track']['id'] for item in playlist['tracks']['items']]
             audio_features = self._http_client_service.get_audio_features(track_ids)            
                 
-            # Extract metrics
             metrics = audio_features['metrics']
             
-            # Plot mean metrics
             mean_metrics = {
                 "Danceability": float(metrics["mean_danceability"]),
                 "Energy": float(metrics["mean_energy"]),
@@ -92,8 +90,6 @@ class PlaylistView(AbstractStrategyView):
                 )
                 st.plotly_chart(fig)
         
-            
-            # Plot key count
             key_count = metrics["key_count"]
             fig = px.bar(
                 x=list(key_count.keys()), 
@@ -105,14 +101,14 @@ class PlaylistView(AbstractStrategyView):
             )
             st.plotly_chart(fig)
             
-        with st.expander("Audio Features Json"):
-            st.write(audio_features)
-            st.download_button(
-                label="Download",
-                data=str(audio_features),
-                file_name="audio_features.json",
-                mime="application/json"
-            )
+            with st.expander("Audio Features Json"):
+                st.write(audio_features)
+                st.download_button(
+                    label="Download",
+                    data=str(audio_features),
+                    file_name="audio_features.json",
+                    mime="application/json"
+                )
 
     @st.cache_data(ttl=600, show_spinner=True)
     def get_cached_playlist(_self, url):

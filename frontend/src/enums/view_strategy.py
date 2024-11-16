@@ -2,6 +2,7 @@ from typing import List
 from enum import Enum
 
 class ViewStrategy(Enum):
+    HOME = "Home"
     ALBUM_ANALYSIS = "Album Analysis (Beta)"
     SONG_ANALYSIS = "Song Analysis (Beta)"
     CHAT = "Chat (Beta)"
