@@ -102,6 +102,11 @@ class AudioFeaturesResponse(BaseModel):
     audio_features: List[AudioFeatures]
     metrics: AudioFeaturesMetrics
 
+class PlaylistAudioFeaturesRequest(BaseModel):
+    name: str
+    description: str
+    metrics: AudioFeaturesMetrics
+    
 class TrackIdsRequest(BaseModel):
     track_ids: List[str]
     
