@@ -89,6 +89,7 @@ class AudioFeaturesMetrics(BaseModel):
     mean_liveness: float
     mean_valence: float
     mean_tempo: float
+    mean_duration_ms: float
     mode_count: AudioFeaturesModesCount
     key_count: AudioFeaturesKeysCount
     

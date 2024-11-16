@@ -54,7 +54,8 @@ class SpotifyClientService:
             "instrumentalness": 0,
             "liveness": 0,
             "valence": 0,
-            "tempo": 0
+            "tempo": 0,
+            "duration_ms": 0
         }
         
         mode_count = {"major": 0, "minor": 0}
@@ -72,6 +73,7 @@ class SpotifyClientService:
             mean_metrics["liveness"] += features["liveness"]
             mean_metrics["valence"] += features["valence"]
             mean_metrics["tempo"] += features["tempo"]
+            mean_metrics["duration_ms"] += features["duration_ms"]
             
             mode_count["major" if features["mode"] == 1 else "minor"] += 1
             key_count[list(key_count.keys())[features["key"]]] += 1
@@ -89,6 +91,7 @@ class SpotifyClientService:
             mean_liveness=mean_metrics["liveness"],
             mean_valence=mean_metrics["valence"],
             mean_tempo=mean_metrics["tempo"],
+            mean_duration_ms=mean_metrics["duration_ms"],
             mode_count=AudioFeaturesModesCount(major=mode_count["major"], minor=mode_count["minor"]),
             key_count=AudioFeaturesKeysCount(**key_count)
         )
