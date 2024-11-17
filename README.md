@@ -64,12 +64,24 @@ The project will use the following technologies:
 ## Running the Project
 To run the project, follow these steps:
 
-Run with Docker Compose (Recomended):
+Environment Setup:
+```bash
+export SPOTIFY_CLIENT_ID=your_spotify_client_id
+export SPOTIFY_CLIENT_SECRET=your_spotify_client_secret
+export OPEN_AI_API_KEY=your_openai_api_key
+```
+
+Run with Docker Compose (Recomended, but don't support local LLM):
 ```bash
 docker-compose up --build
 ```
 
-Or else:
+Run without Docker:
+
+(Optional) Run with local LLM:
+```bash
+export ENABLE_LOCAL_LLM=true
+```
 
 1. Set python version to 3.11.9:
 ```bash

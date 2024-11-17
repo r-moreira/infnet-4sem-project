@@ -1,0 +1,10 @@
+# This file contains the configuration for the backend service.
+# The configuration is loaded from the environment variables, if the environment variable is not set, the default value is used.
+
+spotify:
+  client_id: ${SPOTIFY_CLIENT_ID:1f987f3b7b7b4f3b8b3f3b3b3b3b3b3b}
+  client_secret: ${SPOTIFY_CLIENT_SECRET:1f987f3b7b7b4f3b8b3f3b3b3b3b3b3b}
+openai:
+  api_key: ${OPEN_AI_API_KEY:1f987f3b7b7b4f3b8b3f3b3b3b3b3b3b}
+llm:
+  enable-local-llm: ${ENABLE_LOCAL_LLM:false}

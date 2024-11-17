@@ -27,4 +27,8 @@ services:
       - ./backend:/app
       - ./data:/app/data
     environment:
-      - PYTHONUNBUFFERED=1
+      - PYTHONUNBUFFERED=1  
+      - SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
+      - SPOTIFY_CLIENT_SECRET=${SPOTIFY_CLIENT_SECRET}
+      - OPEN_AI_API_KEY=${OPEN_AI_API_KEY}
+      - ENABLE_LOCAL_LLM=false

@@ -62,7 +62,7 @@ logging.basicConfig(
 
 app = FastAPI()
 container = Container()
-container.config.from_yaml(os.path.join(os.path.dirname(__file__), '../secrets.yml'))
+container.config.from_yaml(os.path.join(os.path.dirname(__file__), '../config.yml'))
 container.wire(modules=[__name__])
  
 include_routers()

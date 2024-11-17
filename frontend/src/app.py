@@ -62,7 +62,7 @@ if __name__ == "__main__":
         ]
     )
     
-    nltk.download('punkt_tab')
-    nltk.download('stopwords')
+    #nltk.download('punkt_tab')
+    #nltk.download('stopwords')
     
     main() 
