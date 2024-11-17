@@ -16,6 +16,8 @@ class OpenAIClientService:
         self._api_key = config["openai"]["api_key"]
     
     def get_chat_response(self, messages: List[Dict[str, str]], api_key: str) -> str:
+        self.logger.info("Getting chat response.")
+        
         if not api_key:
             raise OpenAIClientError("API Key is required.")
         
@@ -33,6 +35,8 @@ class OpenAIClientService:
             raise OpenAIClientError(f"Failed to get chat response: {e}")
     
     def get_playlist_audio_features_explanation(self, playlist_audio_features_request: PlaylistAudioFeaturesRequest) -> str:
+        self.logger.info("Getting playlist audio features explanation.")
+        
         openai.api_key = self._api_key
         client: OpenAI = openai 
         
@@ -90,6 +94,8 @@ class OpenAIClientService:
             raise OpenAIClientError(f"Failed to get playlist audio features explanation: {e}")
     
     def get_audio_features_explanation(self, track_audio_features_request: TrackAudioFeaturesRequest) -> str:
+        self.logger.info("Getting audio features explanation.")
+        
         openai.api_key = self._api_key
         client: OpenAI = openai 
 

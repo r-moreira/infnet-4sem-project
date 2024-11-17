@@ -6,5 +6,6 @@ spotify:
   client_secret: ${SPOTIFY_CLIENT_SECRET:1f987f3b7b7b4f3b8b3f3b3b3b3b3b3b}
 openai:
   api_key: ${OPEN_AI_API_KEY:1f987f3b7b7b4f3b8b3f3b3b3b3b3b3b}
-llm:
-  enable-local-llm: ${ENABLE_LOCAL_LLM:false}
+local_llm:
+  enabled: ${ENABLE_LOCAL_LLM:true}
+  max_length: 1024

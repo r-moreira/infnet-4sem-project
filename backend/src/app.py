@@ -8,6 +8,7 @@ from controller.spotify_controller import SpotifyController
 from service.spotify_client_service import SpotifyClientService
 from service.openai_client_service import OpenAIClientService
 from service.genius_client_service import GeniusClientService
+from service.local_llm_service import LocalLLMService
 import os
 
 class Container(containers.DeclarativeContainer):
@@ -15,7 +16,13 @@ class Container(containers.DeclarativeContainer):
 
     openai_client_service = providers.Singleton(
         OpenAIClientService,
-        config=config)
+        config=config
+    )
+    
+    local_llm_service = providers.Singleton(
+        LocalLLMService,
+        config=config
+    )
     
     genius_client_service = providers.Singleton(GeniusClientService)
     
@@ -26,7 +33,9 @@ class Container(containers.DeclarativeContainer):
 
     openai_controller = providers.Singleton(
         OpenAiController,
-        openai_client_service=openai_client_service
+        config=config,
+        openai_client_service=openai_client_service,
+        local_llm_service=local_llm_service
     )
     
     genius_controller = providers.Singleton(
