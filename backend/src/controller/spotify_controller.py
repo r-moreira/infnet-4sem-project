@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Query, Body
 from service.spotify_client_service import SpotifyClientService
 from typing import Dict, List, Any
-from model.spotify import Playlist, TrackIdsRequest, AudioFeaturesResponse
+from model.spotify_model import Playlist, TrackIdsRequest, AudioFeaturesResponse
 
 class SpotifyController:
     def __init__(self, spotify_client_service: SpotifyClientService) -> None:

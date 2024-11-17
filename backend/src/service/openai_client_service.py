@@ -1,7 +1,7 @@
 import openai
 from openai import OpenAI, OpenAIError
 from typing import List, Dict
-from model.spotify import TrackAudioFeaturesRequest, PlaylistAudioFeaturesRequest
+from model.spotify_model import TrackAudioFeaturesRequest, PlaylistAudioFeaturesRequest
 import logging
 
 class OpenAIClientError(Exception):

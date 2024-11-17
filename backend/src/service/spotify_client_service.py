@@ -1,7 +1,7 @@
 from spotipy.oauth2 import SpotifyClientCredentials
 import spotipy
 import logging
-from model.spotify import Playlist, AudioFeatures, AudioFeaturesMetrics, AudioFeaturesModesCount, AudioFeaturesKeysCount, AudioFeaturesResponse
+from model.spotify_model import Playlist, AudioFeatures, AudioFeaturesMetrics, AudioFeaturesModesCount, AudioFeaturesKeysCount, AudioFeaturesResponse
 from typing import Any, Dict, List, Optional
 
 class SpotifyClientError(Exception):
