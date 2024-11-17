@@ -6,6 +6,7 @@ import logging
 import streamlit as st
 import plotly.express as px
 import plotly.graph_objects as go
+from streamlit_extras.add_vertical_space import add_vertical_space
 
 class PlaylistView(AbstractStrategyView):
     logger = logging.getLogger(__name__)
@@ -25,10 +26,24 @@ class PlaylistView(AbstractStrategyView):
     def show(self) -> None:
         self.logger.info("Showing Playlist View")
         
+        st.header("Playlist Analysis 📊")
+        
+        add_vertical_space(1)
+        
+        st.subheader("Instructions:")
+        
+        st.markdown("""
+            1. Enter a Spotify Playlist URL, like: https://open.spotify.com/playlist/37i9dQZEVXbNG2KDcFcKOF
+            2. Press Enter
+            3. Wait for the dashboard and AI to generate an explanation of the audio features of the playlist
+        """)
+        
+        st.divider()
+        
         url = st.text_input("Enter the playlist URL")
         
         if url:
-            playlist = self.get_cached_playlist(url)
+            playlist = self.get_cached_playlist(url.strip())
             
             iframe_html = f"""
                 <div style="display: flex; justify-content: center;">

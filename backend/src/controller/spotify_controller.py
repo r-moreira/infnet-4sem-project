@@ -5,7 +5,7 @@ from model.spotify_model import Playlist, TrackIdsRequest, AudioFeaturesResponse
 
 class SpotifyController:
     def __init__(self, spotify_client_service: SpotifyClientService) -> None:
-        self.spotify_client_service = spotify_client_service
+        self._spotify_client_service = spotify_client_service
         self.router = APIRouter(prefix="/spotify")
         self.router.add_api_route("/playlist", self.get_playlist, methods=["GET"])
         self.router.add_api_route(
@@ -18,13 +18,13 @@ class SpotifyController:
   
     async def get_playlist(self, url: str = Query(...)) -> Playlist:
         try:
-            return self.spotify_client_service.get_playlist(url)
+            return self._spotify_client_service.get_playlist(url)
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
         
     async def get_audio_features(self, request: TrackIdsRequest = Body(...)) -> AudioFeaturesResponse:
         try:
-            return self.spotify_client_service.get_audio_features(request.track_ids)
+            return self._spotify_client_service.get_audio_features(request.track_ids)
         except Exception as e:
             raise HTTPException(status_code=500, detail=str(e))
         

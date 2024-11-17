@@ -1,8 +1,7 @@
 from typing import Dict
 from fastapi import APIRouter, HTTPException
 from service.openai_client_service import OpenAIClientService
-from model.chat_request import ChatRequest
-from model.chat_response import ChatResponse
+from model.openai_model import ChatRequest, ChatResponse
 from model.spotify_model import TrackAudioFeaturesRequest, PlaylistAudioFeaturesRequest
 
 class OpenAiController: 
