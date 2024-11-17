@@ -3,15 +3,15 @@
 ## ⚠️ Avisos ao Professor: 
 * Para este TP, refatorei todo o projeto para ter backend e frontend separados, portanto, não é possível fazer o deploy no Streamlit Community Cloud. 
 
-* Dirija-se ao notebook `genius_webscrapping` dentro do diretório ```./notebook``` para acessar o código de webscrapping utilizado para gerar o arquivo para upload no streamlit.
-
 * Dirija-se ao diretório `documents` para acessar o Data Summary Report e o Project Charter, os conteúdos estão em inglês pois pretendo utilizar para o meu portfólio.
-  
-* Dirija-se ao diretório `data/processed` para acessar os arquivos de dados processados através de webscrapping para upload no streamlit.
- 
-* Para testar o chat é necessário uma API Key da Open AI, que pode ser obtida em [Tutorial como criar API Key](https://hub.asimov.academy/tutorial/como-gerar-uma-api-key-na-openai/), posso disponibilizar a minha caso necessário. De qualquer forma, disponibilizei um print do chat em funcionamento no diretório `images`.
 
-* Foi implementado a chamada de API do Genius.com, para trazer informações relacionadas a música. Porém, a API não fornece a letra da música. Para isso, será adicionando webscrapping no backend (O código que se encontra no ```./notebook```), para trazer a letra da música e melhorar a interface do usuário, organizando as informações de forma mais clara.
+* O projeto suporta o uso de LLM Local e através de API da Open AI. Para utilizar o LLM Local, é necessário setar a variável de ambiente `ENABLE_LOCAL_LLM=true`.
+
+* Não é possível utilizar o docker com o LLM Local, pois o modelo é muito pesado e não é possível subir o container.
+
+* Para rodar o projeto usando o LLM GPT-4o é necessário uma API Key da Open AI, que pode ser obtida em [Tutorial API Key Open AI](https://hub.asimov.academy/tutorial/como-gerar-uma-api-key-na-openai/), posso disponibilizar a minha caso necessário. De qualquer forma, disponibilizei um print do chat em funcionamento no diretório `images`.
+
+* Para rodar o projeto, é necessário setar as variáveis de ambiente `SPOTIFY_CLIENT_ID` e `SPOTIFY_CLIENT_SECRET` com as credenciais da API do Spotify. [Tutorial criação de APP Spotify](https://developer.spotify.com/documentation/general/guides/app-settings/).
 
 
 ## Project Description
@@ -26,10 +26,10 @@ The project will use the following technologies:
 * Spotify API
 * Web scraping
 * Machine Learning
-* Natural Language Processing (NLP)
+* Natural Language Processing (NLP) (To Do)
 * LLM (Large Language Model)
 * Docker
-* Database
+* Database (To Do)
 
 #### Project Structure:
 ```
@@ -37,6 +37,7 @@ The project will use the following technologies:
 │   ├── src
 │   ├── requirements.txt
 │   └── Dockerfile
+│   └── config.yml
 ├── frontend
 │   ├── src
 │   ├── requirements.txt
@@ -81,6 +82,8 @@ Run without Docker:
 (Optional) Run with local LLM:
 ```bash
 export ENABLE_LOCAL_LLM=true
+
+# update max_tokens in backend/config.yml as needed
 ```
 
 1. Set python version to 3.11.9:
