@@ -15,6 +15,8 @@
 
 * Dentro do diretório images/ estão prints contendo o funcionamento do projeto.
 
+* O Modelo Local utilizado foi o TinyLlama-1.1B, pois ele é otimizado para uso em dispositivos com pouca memória, e tem o funcionamento semelhante ao GPT-4.
+
 ## Project Description
 The problem that the project aims to solve is to help ethnomusicology professionals access music information more easily and quickly using artificial intelligence, so they can conduct their research more efficiently, aiding in the cataloging and research of music from different cultures. It can also be used by people who enjoy music and want more detailed information about the songs they listen to.
 
