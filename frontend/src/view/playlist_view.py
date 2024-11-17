@@ -103,21 +103,37 @@ class PlaylistView(AbstractStrategyView):
             fig = go.Figure(go.Indicator(
                     mode = "gauge+number",
                     value = float(metrics["mean_tempo"]),
-                    title = {'text': "Mean Tempo (BPM)"}))
+                    title = {'text': "Mean Tempo (BPM)"},
+                    gauge={
+                            'bar': {'color': "#636EFA"},
+                            'axis': {'range': [0, 200]}
+                        }
+                    ))
+            
             st.plotly_chart(fig, use_container_width=True)   
             
         with col2:    
             fig = go.Figure(go.Indicator(
                     mode = "gauge+number",
                     value = float(metrics["mean_duration_ms"]) / 1000,
-                    title = {'text': "Mean Duration (Seconds)"}))
+                    title = {'text': "Mean Duration (Seconds)"},
+                    gauge={
+                            'bar': {'color': "#EF553B"},
+                            'axis': {'range': [0, 600]}
+                        }
+                    ))
             st.plotly_chart(fig, use_container_width=True) 
                 
         with col3:
             fig = go.Figure(go.Indicator(
                     mode = "gauge+number",
                     value = float(metrics["mean_loudness"]),
-                    title = {'text': "Mean Loudness (dB)"}))
+                    title = {'text': "Mean Loudness (DB)"},
+                    gauge={
+                            'bar': {'color': "#00CC96"},
+                            'axis': {'range': [-60, 0]}
+                        }
+                    ))
             st.plotly_chart(fig, use_container_width=True)
         
         fig = px.bar(
