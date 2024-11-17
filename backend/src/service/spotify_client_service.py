@@ -4,6 +4,12 @@ import logging
 from model.spotify import Playlist, AudioFeatures, AudioFeaturesMetrics, AudioFeaturesModesCount, AudioFeaturesKeysCount, AudioFeaturesResponse
 from typing import Any, Dict, List, Optional
 
+class SpotifyClientError(Exception):
+    def __init__(self, message: str) -> None:
+        self.message = message
+        super().__init__(self.message)
+
+
 class SpotifyClientService:
     logger = logging.getLogger(__name__)
         
@@ -14,10 +20,16 @@ class SpotifyClientService:
         )
         self._sp = spotipy.Spotify(client_credentials_manager=self._client_credentials_manager)
         
-    def search(self, query: str) -> Any | None:
+        
+    def search(self, query: str) -> Any:
         self.logger.info(f"Searching for {query}")
-        results = self._sp.search(q=query, limit=20)
-        return results
+        
+        try:
+            results = self._sp.search(q=query, limit=20)
+            return results
+        except Exception as e:
+            self.logger.error(f"Failed to search for {query}: {e}")
+            raise SpotifyClientError(f"Failed to search for {query}")
     
     def get_playlist(self, url: str) -> Optional[Playlist]:
         self.logger.info(f"Getting playlist from {url}")
@@ -35,12 +47,23 @@ class SpotifyClientService:
             'tracks.items.track.album.name'
         ])
         
-        playlist = self._sp.playlist(url, fields=fields)
-        return playlist
+        try:
+            playlist = self._sp.playlist(url, fields=fields)
+            return playlist
+        except Exception as e:
+            self.logger.error(f"Failed to get playlist from {url}: {e}")
+            raise SpotifyClientError(f"Failed to get playlist from {url}")
     
     def get_audio_features(self, track_id_list: List[str]) -> Optional[AudioFeaturesResponse]:
         self.logger.info(f"Getting track info from {track_id_list}")
-        audio_features_list = self._sp.audio_features(track_id_list)  
+        
+        audio_features_list = None
+        
+        try:
+            audio_features_list = self._sp.audio_features(track_id_list)  
+        except Exception as e:
+            self.logger.error(f"Failed to get audio features from {track_id_list}: {e}")
+            raise SpotifyClientError(f"Failed to get audio features from {track_id_list}")
         
         if not audio_features_list:
             return None

@@ -7,9 +7,7 @@ class SpotifyController:
     def __init__(self, spotify_client_service: SpotifyClientService) -> None:
         self.spotify_client_service = spotify_client_service
         self.router = APIRouter(prefix="/spotify")
-        
         self.router.add_api_route("/playlist", self.get_playlist, methods=["GET"])
-        
         self.router.add_api_route(
             path="/audio-features",
             endpoint=self.get_audio_features, 

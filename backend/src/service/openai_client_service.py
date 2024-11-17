@@ -2,6 +2,7 @@ import openai
 from openai import OpenAI, OpenAIError
 from typing import List, Dict
 from model.spotify import TrackAudioFeaturesRequest, PlaylistAudioFeaturesRequest
+import logging
 
 class OpenAIClientError(Exception):
     def __init__(self, message: str) -> None:
@@ -9,6 +10,8 @@ class OpenAIClientError(Exception):
         super().__init__(self.message)
 
 class OpenAIClientService:
+    logger = logging.getLogger(__name__)
+    
     def __init__(self, config: Dict) -> None:
         self._api_key = config["openai"]["api_key"]
     
@@ -26,7 +29,8 @@ class OpenAIClientService:
             )
             return response.choices[0].message.content
         except OpenAIError as e:
-            raise OpenAIClientError(f"An error occurred: {e}")
+            self.logger.error(f"Failed to get chat response: {e}")
+            raise OpenAIClientError(f"Failed to get chat response: {e}")
     
     def get_playlist_audio_features_explanation(self, playlist_audio_features_request: PlaylistAudioFeaturesRequest) -> str:
         openai.api_key = self._api_key
@@ -82,7 +86,8 @@ class OpenAIClientService:
             )
             return response.choices[0].message.content
         except OpenAIError as e:
-            raise OpenAIClientError(f"An error occurred: {e}")
+            self.logger.error(f"Failed to get playlist audio features explanation: {e}")
+            raise OpenAIClientError(f"Failed to get playlist audio features explanation: {e}")
     
     def get_audio_features_explanation(self, track_audio_features_request: TrackAudioFeaturesRequest) -> str:
         openai.api_key = self._api_key
@@ -120,4 +125,5 @@ class OpenAIClientService:
             )
             return response.choices[0].message.content
         except OpenAIError as e:
-            raise OpenAIClientError(f"An error occurred: {e}")
+            self.logger.error(f"Failed to get audio features explanation: {e}")
+            raise OpenAIClientError(f"Failed to get audio features explanation: {e}")

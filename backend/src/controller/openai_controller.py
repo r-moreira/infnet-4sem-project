@@ -13,9 +13,6 @@ class OpenAiController:
         self.router.add_api_route("/explanation/track", self.get_audio_features_explanation, methods=["POST"])
         self.router.add_api_route("/explanation/playlist", self.get_playlist_audio_features_explanation, methods=["POST"])
 
-    async def health_check(self) -> Dict:
-        return {"Status": "UP"}
-    
     async def get_chat_response(self, request: ChatRequest) -> ChatResponse:
         try:
             response = self._openai_client_service.get_chat_response(request.messages, request.api_key)
