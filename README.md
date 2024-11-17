@@ -9,10 +9,11 @@
 
 * Não é possível utilizar o docker com o LLM Local, pois o modelo é muito pesado e não é possível subir o container.
 
-* Para rodar o projeto usando o LLM GPT-4o é necessário uma API Key da Open AI, que pode ser obtida em [Tutorial API Key Open AI](https://hub.asimov.academy/tutorial/como-gerar-uma-api-key-na-openai/), posso disponibilizar a minha caso necessário. De qualquer forma, disponibilizei um print do chat em funcionamento no diretório `images`.
+* Para rodar o projeto usando o LLM GPT-4o é necessário uma API Key da Open AI, que pode ser obtida em [Tutorial API Key Open AI](https://hub.asimov.academy/tutorial/como-gerar-uma-api-key-na-openai/)
 
 * Para rodar o projeto, é necessário setar as variáveis de ambiente `SPOTIFY_CLIENT_ID` e `SPOTIFY_CLIENT_SECRET` com as credenciais da API do Spotify. [Tutorial criação de APP Spotify](https://developer.spotify.com/documentation/general/guides/app-settings/).
 
+* Dentro do diretório images/ estão prints contendo o funcionamento do projeto.
 
 ## Project Description
 The problem that the project aims to solve is to help ethnomusicology professionals access music information more easily and quickly using artificial intelligence, so they can conduct their research more efficiently, aiding in the cataloging and research of music from different cultures. It can also be used by people who enjoy music and want more detailed information about the songs they listen to.
