@@ -7,5 +7,5 @@ spotify:
 openai:
   api_key: ${OPEN_AI_API_KEY:1f987f3b7b7b4f3b8b3f3b3b3b3b3b3b}
 local_llm:
-  enabled: ${ENABLE_LOCAL_LLM:true}
+  enabled: ${ENABLE_LOCAL_LLM:false}
   max_length: 1024
