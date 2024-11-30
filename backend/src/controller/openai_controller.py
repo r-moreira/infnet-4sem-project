@@ -4,8 +4,11 @@ from service.openai_client_service import OpenAIClientService
 from service.local_llm_service import LocalLLMService
 from model.openai_model import ChatRequest, ChatResponse
 from model.spotify_model import TrackAudioFeaturesRequest, PlaylistAudioFeaturesRequest
+import logging
 
 class OpenAiController: 
+    logger = logging.getLogger(__name__)
+    
     def __init__(
             self,
             config: Dict,
@@ -28,6 +31,7 @@ class OpenAiController:
             response = self._openai_client_service.get_chat_response(request.messages, request.api_key)
             return {"message": response}
         except Exception as e:
+            self.logger.error(f"Failed to get chat response: {e}")
             raise HTTPException(status_code=500, detail=str(e))
         
     async def get_playlist_audio_features_explanation(self, playlist_audio_features_request: PlaylistAudioFeaturesRequest) -> ChatResponse:
@@ -39,6 +43,7 @@ class OpenAiController:
                 
             return {"message": response}
         except Exception as e:
+            self.logger.error(f"Failed to get playlist audio features explanation: {e}")
             raise HTTPException(status_code=500, detail=str(e))
         
     async def get_audio_features_explanation(self, track_audio_features_request: TrackAudioFeaturesRequest) -> ChatResponse:
@@ -49,4 +54,5 @@ class OpenAiController:
             response = self._openai_client_service.get_audio_features_explanation(track_audio_features_request)
             return {"message": response}
         except Exception as e:
+            self.logger.error(f"Failed to get audio features explanation: {e}")
             raise HTTPException(status_code=500, detail=str(e))

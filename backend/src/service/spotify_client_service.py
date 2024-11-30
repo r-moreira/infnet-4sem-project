@@ -19,6 +19,7 @@ class SpotifyClientService:
             client_secret=config["spotify"]["client_secret"]
         )
         self._sp = spotipy.Spotify(client_credentials_manager=self._client_credentials_manager)
+        self._ENABLE_AUDIO_FEATURES_MOCK = bool(config["spotify"]["enable_audio_features_mock"])
         
         
     def search(self, query: str) -> Any:
@@ -56,6 +57,9 @@ class SpotifyClientService:
     
     def get_audio_features(self, track_id_list: List[str]) -> Optional[AudioFeaturesResponse]:
         self.logger.info(f"Getting track info from {track_id_list}")
+        
+        if self._ENABLE_AUDIO_FEATURES_MOCK:
+            return self.mocked_audio_features_response()    
         
         audio_features_list = None
         
@@ -144,3 +148,45 @@ class SpotifyClientService:
         )
               
         return audio_features_response
+    
+    def mocked_audio_features_response(self):
+        return AudioFeaturesResponse(
+            audio_features=[
+                AudioFeatures(
+                    danceability=0.8,
+                    energy=0.7,
+                    key=5,
+                    loudness=-5.0,
+                    mode=1,
+                    speechiness=0.05,
+                    acousticness=0.1,
+                    instrumentalness=0.5,
+                    liveness=0.15,
+                    valence=0.6,
+                    tempo=120.0,
+                    type="audio_features",
+                    id="0ZA8KwFAk1KoE27yvxngpq",
+                    uri="spotify:track:0ZA8KwFAk1KoE27yvxngpq",
+                    track_href="https://api.spotify.com/v1/tracks/0ZA8KwFAk1KoE27yvxngpq",
+                    analysis_url="https://api.spotify.com/v1/audio-analysis/0ZA8KwFAk1KoE27yvxngpq",
+                    duration_ms=210000,
+                    time_signature=4
+                )
+            ],
+            metrics=AudioFeaturesMetrics(
+                mean_danceability=0.8,
+                mean_energy=0.7,
+                mean_loudness=-5.0,
+                mean_speechiness=0.05,
+                mean_acousticness=0.1,
+                mean_instrumentalness=0.0,
+                mean_liveness=0.15,
+                mean_valence=0.6,
+                mean_tempo=120.0,
+                mean_duration_ms=210000,
+                mode_count=AudioFeaturesModesCount(major=75, minor=25),
+                key_count=AudioFeaturesKeysCount(
+                    C=25, C_sharp=5, D=10, D_sharp=2, E=15, F=10, F_sharp=3, G=10, G_sharp=0, A=5, A_sharp=0, B=5
+                )
+            )
+        )

@@ -6,6 +6,8 @@ secrets.yml
 
 .vscode/settings.json
 
+langchain-agents-spotify.ipynb
+
 todos.md
 
 # Byte-compiled / optimized / DLL files

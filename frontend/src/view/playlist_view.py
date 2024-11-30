@@ -33,7 +33,7 @@ class PlaylistView(AbstractStrategyView):
         st.subheader("Instructions:")
         
         st.markdown("""
-            1. Enter a Spotify Playlist URL, like: https://open.spotify.com/playlist/37i9dQZEVXbNG2KDcFcKOF
+            1. Enter a Spotify Playlist URL, like: https://open.spotify.com/playlist/2VTOQEarWbJOhKwGhQjMBH
             2. Press Enter
             3. Wait for the dashboard and AI to generate an explanation of the audio features of the playlist
         """)
@@ -55,24 +55,22 @@ class PlaylistView(AbstractStrategyView):
                 st.components.v1.html(iframe_html, height=600)
             
             track_ids = [item['track']['id'] for item in playlist['tracks']['items']]
-            audio_features = self._http_client_service.get_audio_features(track_ids)                    
+            audio_features = self.get_cached_audio_features(track_ids)     
             metrics = audio_features['metrics']
             
             self.show_audio_feature_statistics(metrics)
                         
             with st.spinner("Generating Explanation..."):
-                explanation = self.get_cached_audio_features_explanation(playlist, metrics)
-                st.header("AI Generated Explanation:")
-                st.markdown(explanation)
-            
-            with st.expander("Audio Features Json"):
-                st.write(audio_features)
-                st.download_button(
-                    label="Download",
-                    data=str(audio_features),
-                    file_name="audio_features.json",
-                    mime="application/json"
-                )
+                with st.expander("Audio Features AI Generated Explanation"):
+                    explanation = self.get_cached_audio_features_explanation(playlist, metrics)
+                    st.header("Audio Features AI Generated Explanation:")
+                    st.markdown(explanation)
+                    st.download_button(
+                        label="Download Audio Features Json",
+                        data=str(audio_features),
+                        file_name="audio_features.json",
+                        mime="application/json"
+                    )
 
     @st.cache_data(ttl=3600, show_spinner=False)
     def get_cached_audio_features_explanation(_self, playlist, metrics):
@@ -85,6 +83,10 @@ class PlaylistView(AbstractStrategyView):
     @st.cache_data(ttl=3600, show_spinner=True)
     def get_cached_playlist(_self, url):
         return _self._http_client_service.get_playlist(url)
+    
+    @st.cache_data(ttl=3600, show_spinner=False)
+    def get_cached_audio_features(_self, track_ids):
+        return _self._http_client_service.get_audio_features(track_ids)
     
     def show_audio_feature_statistics(self, metrics):
         mean_metrics = {

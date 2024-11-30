@@ -9,43 +9,39 @@ from service.spotify_client_service import SpotifyClientService
 from service.openai_client_service import OpenAIClientService
 from service.genius_client_service import GeniusClientService
 from service.local_llm_service import LocalLLMService
+
 import os
 
 class Container(containers.DeclarativeContainer):
     config = providers.Configuration()
 
-    openai_client_service = providers.Singleton(
-        OpenAIClientService,
-        config=config
-    )
-    
-    local_llm_service = providers.Singleton(
-        LocalLLMService,
-        config=config
-    )
-    
-    genius_client_service = providers.Singleton(GeniusClientService)
-    
-    spotify_client_service = providers.Singleton(
-        SpotifyClientService,
-        config=config
-    )
-
     openai_controller = providers.Singleton(
         OpenAiController,
         config=config,
-        openai_client_service=openai_client_service,
-        local_llm_service=local_llm_service
+        openai_client_service=providers.Singleton(
+            OpenAIClientService,
+            config=config
+        ),
+        local_llm_service=providers.Singleton(
+            LocalLLMService,
+            config=config
+        )
     )
     
     genius_controller = providers.Singleton(
         GeniusController,
-        genius_client_service=genius_client_service
+        genius_client_service=providers.Singleton(
+            GeniusClientService,
+            config=config
+        )
     )
     
     spotify_controller = providers.Singleton(
         SpotifyController,
-        spotify_client_service=spotify_client_service
+            spotify_client_service=providers.Singleton(
+            SpotifyClientService,
+            config=config
+        )
     )
     
 
