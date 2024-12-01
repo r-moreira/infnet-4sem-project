@@ -3,6 +3,8 @@
 ## ⚠️ Avisos ao Professor: 
 * Para este TP, refatorei todo o projeto para ter backend e frontend separados, portanto, não é possível fazer o deploy no Streamlit Community Cloud. 
 
+* Importante! O Spotify bloqueou o acesso para endpoints usados por esse projeto no dia 27/11, mais informações podem ser encontradas [aqui](https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api). Portanto, não é mais possível acessar as informações de audio and song features usadas no projeto. Para contornar isso, e o restante do projeto funcionar, fiz um "Mock" dos dados. Infelizmente isso aconteceu no final do projeto, e não tive tempo de refatorar para usar outra API.
+  
 * Dirija-se ao diretório `documents` para acessar o Data Summary Report e o Project Charter, os conteúdos estão em inglês pois pretendo utilizar para o meu portfólio.
 
 * O projeto suporta o uso de LLM Local e através de API da Open AI. Para utilizar o LLM Local, é necessário setar a variável de ambiente `ENABLE_LOCAL_LLM=true`.
