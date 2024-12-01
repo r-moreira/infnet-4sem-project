@@ -49,6 +49,8 @@ class OpenAIClientService:
             You will receive a list of tracks with their respective lyrics.
             
             You must capture the overall essence of the lyrics and provide a summary that is easy to understand.
+            
+            Tell about the mood, themes, and any other interesting aspects of the lyrics.
         """
         
         prompt = f"""
