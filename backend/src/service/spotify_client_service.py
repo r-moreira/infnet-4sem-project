@@ -179,7 +179,7 @@ class SpotifyClientService:
                 mean_loudness=-5.0,
                 mean_speechiness=0.05,
                 mean_acousticness=0.1,
-                mean_instrumentalness=0.0,
+                mean_instrumentalness=0.5,
                 mean_liveness=0.15,
                 mean_valence=0.6,
                 mean_tempo=120.0,

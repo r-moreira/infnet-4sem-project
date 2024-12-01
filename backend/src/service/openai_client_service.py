@@ -2,6 +2,7 @@ import openai
 from openai import OpenAI, OpenAIError
 from typing import List, Dict
 from model.spotify_model import TrackAudioFeaturesRequest, PlaylistAudioFeaturesRequest
+from model.genius_model import SongLyricsInfo
 import logging
 
 class OpenAIClientError(Exception):
@@ -33,6 +34,45 @@ class OpenAIClientService:
         except OpenAIError as e:
             self.logger.error(f"Failed to get chat response: {e}")
             raise OpenAIClientError(f"Failed to get chat response: {e}")
+    
+    def get_playlist_lyrics_resume(self, song_lyrics_info_list: List[SongLyricsInfo]) -> str:
+        self.logger.info("Getting playlist lyrics resume.")
+        
+        openai.api_key = self._api_key
+        client: OpenAI = openai
+        
+        system_prompt = f"""
+            You are a music expert that helps people understand Spotify playlist lyrics.
+
+            You have been asked to provide a humanized resume of the lyrics of a Spotify playlist.
+            
+            You will receive a list of tracks with their respective lyrics.
+            
+            You must capture the overall essence of the lyrics and provide a summary that is easy to understand.
+        """
+        
+        prompt = f"""
+        Provide a humanized resume of the lyrics of the following playlist lyrics list:
+        
+            #Lyrics List
+            {[f"Song Name: {song_lyrics_info.song_name}, Artist: {song_lyrics_info.artist}, Lyrics: {song_lyrics_info.lyrics}" for song_lyrics_info in song_lyrics_info_list]}
+            #End Lyrics List
+        """
+        
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": prompt}
+        ]
+        
+        try:
+            response = client.chat.completions.create(
+                model="gpt-4o-mini",
+                messages=messages
+            )
+            return response.choices[0].message.content
+        except OpenAIError as e:
+            self.logger.error(f"Failed to get playlist lyrics resume: {e}")
+            raise OpenAIClientError(f"Failed to get playlist lyrics resume: {e}")
     
     def get_playlist_audio_features_explanation(self, playlist_audio_features_request: PlaylistAudioFeaturesRequest) -> str:
         self.logger.info("Getting playlist audio features explanation.")

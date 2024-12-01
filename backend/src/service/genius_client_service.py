@@ -83,13 +83,12 @@ class GeniusClientService:
             response = requests.get(url)
             
             if response.status_code != 200:
-                print(f"Failed to fetch page {page} - {response.text}")
+                self.logger.error(f"Failed to get artist songs: {response.status_code} - {response.text}")
                 break
                         
             songs = response.json()['response']['songs']
             
             for song in songs:
-                self.logger.info(f"Checking song {song['title']}...")
                 if song['title'].lower() == song_name.lower():
                     return song['url']
         

@@ -1,9 +1,10 @@
-from typing import Dict
+from typing import Dict, List
 from fastapi import APIRouter, HTTPException
 from service.openai_client_service import OpenAIClientService
 from service.local_llm_service import LocalLLMService
 from model.openai_model import ChatRequest, ChatResponse
 from model.spotify_model import TrackAudioFeaturesRequest, PlaylistAudioFeaturesRequest
+from model.genius_model import SongLyricsInfo
 import logging
 
 class OpenAiController: 
@@ -22,6 +23,7 @@ class OpenAiController:
         self.router.add_api_route("/chat", self.get_chat_response, methods=["POST"])
         self.router.add_api_route("/explanation/track", self.get_audio_features_explanation, methods=["POST"])
         self.router.add_api_route("/explanation/playlist", self.get_playlist_audio_features_explanation, methods=["POST"])
+        self.router.add_api_route("/playlist/lyrics/resume", self.get_playlist_lyrics_resume, methods=["POST"])
 
     async def get_chat_response(self, request: ChatRequest) -> ChatResponse:
         if self._config['local_llm']['enabled']:
@@ -32,6 +34,17 @@ class OpenAiController:
             return {"message": response}
         except Exception as e:
             self.logger.error(f"Failed to get chat response: {e}")
+            raise HTTPException(status_code=500, detail=str(e))
+        
+    async def get_playlist_lyrics_resume(self, song_lyrics_info_list: List[SongLyricsInfo]) -> ChatResponse:
+        if self._config['local_llm']['enabled']:
+            raise HTTPException(status_code=501, detail="Not Implemented")
+        
+        try:
+            response = self._openai_client_service.get_playlist_lyrics_resume(song_lyrics_info_list)
+            return {"message": response}
+        except Exception as e:
+            self.logger.error(f"Failed to get playlist lyrics resume: {e}")
             raise HTTPException(status_code=500, detail=str(e))
         
     async def get_playlist_audio_features_explanation(self, playlist_audio_features_request: PlaylistAudioFeaturesRequest) -> ChatResponse:

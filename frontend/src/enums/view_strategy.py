@@ -5,7 +5,7 @@ class ViewStrategy(Enum):
     HOME = "Home"
     # ALBUM_ANALYSIS = "Album Analysis (Beta)"
     # SONG_ANALYSIS = "Song Analysis (Beta)"
-    # CHAT = "Chat (Beta)"
+    CHAT = "Chat (Beta)"
     PLAYLIST = "Playlist Analysis"
     
     @staticmethod

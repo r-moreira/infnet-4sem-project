@@ -7,8 +7,6 @@ from dependency_injector.wiring import Provide, inject
 from view.sidebar_view import SidebarView
 from view.chat_view import ChatView
 from view.main_view import MainView
-from view.album_analysis_view import AlbumAnalysisView
-from view.song_analysis_view import SongAnalysisView
 from view.playlist_view import PlaylistView
 from view.home_view import HomeView
 
@@ -27,16 +25,11 @@ class Container(containers.DeclarativeContainer):
         ),
         strategy_view_list=providers.List(
             providers.Singleton(HomeView),
-            # providers.Singleton(AlbumAnalysisView),
-            # providers.Singleton(
-            #     ChatView,
-            #     session_state_service=session_state_service,
-            #     http_client_service=http_client_service
-            # ),
-            # providers.Singleton(
-            #     SongAnalysisView,
-            #     http_client_service=http_client_service
-            # ),
+            providers.Singleton(
+                ChatView,
+                session_state_service=session_state_service,
+                http_client_service=http_client_service
+            ),
             providers.Singleton(
                 PlaylistView,
                 session_state_service=session_state_service,
