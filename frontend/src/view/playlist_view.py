@@ -71,6 +71,24 @@ class PlaylistView(AbstractStrategyView):
                         file_name="audio_features.json",
                         mime="application/json"
                     )
+            
+            get_lyrics = st.button("Get Lyrics")
+            lyrics_found_list = []
+            if get_lyrics:
+                for item in playlist['tracks']['items']:
+                    track = item['track']
+                    song_name = track['name']
+                    artist = track['artists'][0]['name']
+                    st.header(f"Song: {song_name} - Artist: {artist}")
+                    lyrics_info = self._http_client_service.get_song_lyrics(song_name, artist)
+                    
+                    if lyrics_info["lyrics"] != "Lyrics not found":
+                        lyrics_found_list.append(lyrics_info)
+                    
+                    st.markdown(lyrics_info["lyrics"].replace('\n', '<br>'), unsafe_allow_html=True)
+                st.download_button(label="Download Lyrics Json", data=str(lyrics_found_list), file_name="lyrics.json", mime="application/json")
+
+            
 
     @st.cache_data(ttl=3600, show_spinner=False)
     def get_cached_audio_features_explanation(_self, playlist, metrics):

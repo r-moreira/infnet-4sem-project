@@ -30,22 +30,25 @@ class GeniusClientService:
         LYRICS_NOT_FOUND_RESPONSE = {
                 "artist": artist,
                 "song_name": song_name,
-                "lyrics": "Not found"
+                "lyrics": "Lyrics not found"
             }
         
         artist_id = self._get_artist_id(artist)
         
         if not artist_id:
+            self.logger.info(f"Artist {artist} not found.")
             return LYRICS_NOT_FOUND_RESPONSE
         
         song_url = self._get_artist_song_lyrics_url(artist_id, song_name)
         
         if not song_url:
+            self.logger.info(f"Song {song_name} not found.")
             return LYRICS_NOT_FOUND_RESPONSE
         
         lyrics = self._scrap_lyrics(song_url)
         
         if not lyrics:
+            self.logger.info(f"Lyrics for {song_name} not found.")
             return LYRICS_NOT_FOUND_RESPONSE
         
         return {
@@ -75,25 +78,23 @@ class GeniusClientService:
         while True:
             url = f"https://genius.com/api/artists/{artist_id}/songs?page={page}&per_page=50"
             
-            print(f"Fetching page {page}...")
+            self.logger.info(f"Fetching page {page}...")
             
             response = requests.get(url)
             
             if response.status_code != 200:
                 print(f"Failed to fetch page {page} - {response.text}")
                 break
-            
-            print(f"Page fetched. - {response.json()}")
-            
-            if response.json()['response']['next_page'] is None:
-                break
-            
+                        
             songs = response.json()['response']['songs']
             
             for song in songs:
+                self.logger.info(f"Checking song {song['title']}...")
                 if song['title'].lower() == song_name.lower():
                     return song['url']
         
+            if response.json()['response']['next_page'] is None:
+                break
             page += 1
             
         return None

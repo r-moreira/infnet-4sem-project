@@ -94,4 +94,15 @@ class HttpClientService:
             self.logger.error(f"Failed to get playlist audio features explanation: {response.status_code} - {response.text}")
             raise HttpClientError(f"Failed to get playlist audio features explanation")
         
+    def get_song_lyrics(self, song_name: str, artist: str) -> Dict:
+        encoded_query = urlencode({"song_name": song_name, "artist": artist})
+        url = f"{self._url}/genius/lyrics?{encoded_query}"
         
+        self.logger.info(f"Sending song lyrics request to {url}")
+        response = requests.get(url)  
+            
+        if response.status_code == 200:
+            return response.json()
+        else:
+            HttpClientService.logger.error(f"Failed to get song lyrics: {response.status_code} - {response.text}")
+            raise HttpClientError(f"Failed to get song lyrics")
