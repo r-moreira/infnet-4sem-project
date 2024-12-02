@@ -11,8 +11,20 @@ class GeniusController:
         self.router = APIRouter(prefix="/genius")
         self.router.add_api_route("/search", self.search, methods=["GET"])
         self.router.add_api_route("/lyrics", self.get_lyrics, methods=["GET"])
-        
+    
     async def search(self, query: str = Query(..., description="Search query")):
+        """
+        Search for songs on Genius API
+        
+        Args:
+            query (str): Search query
+            
+        Returns:
+            Search response from Genius API
+            
+        Raises:
+            HTTPException: If there is an error while searching
+        """
         try:
             self.logger.info(f"Searching for {query}")
             return self._genius_client_service.search(query)
@@ -25,6 +37,19 @@ class GeniusController:
             artist: str = Query(..., description="Artist name"), 
             song_name: str = Query(..., description="Song name")
         ) -> SongLyricsInfo:
+        """
+        Get lyrics for a song
+        
+        Args:
+            artist (str): Artist name
+            song_name (str): Song name
+            
+        Returns:
+            Lyrics for the song from Genius API
+            
+        Raises:
+            HTTPException: If there is an error while getting lyrics
+        """
         try:
             self.logger.info(f"Getting lyrics for {artist} - {song_name}")  
             return self._genius_client_service.get_lyrics(artist, song_name)

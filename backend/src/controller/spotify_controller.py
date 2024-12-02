@@ -20,6 +20,18 @@ class SpotifyController:
         )
   
     async def get_playlist(self, url: str = Query(...)) -> Playlist:
+        """
+        Get playlist from Spotify API
+        
+        Args:
+            url (str): Playlist URL
+            
+        Returns:
+            Playlist from Spotify API
+            
+        Raises:
+            HTTPException: If there is an error while getting playlist
+        """
         try:
             return self._spotify_client_service.get_playlist(url)
         except Exception as e:
@@ -27,6 +39,18 @@ class SpotifyController:
             raise HTTPException(status_code=500, detail=str(e))
         
     async def get_audio_features(self, request: TrackIdsRequest = Body(...)) -> AudioFeaturesResponse:
+        """
+        Get audio features from Spotify API
+        
+        Args:
+            request (TrackIdsRequest): Track IDs request
+            
+        Returns:
+            Audio features from Spotify API
+            
+        Raises:
+            HTTPException: If there is an error while getting audio features
+        """
         try:
             return self._spotify_client_service.get_audio_features(request.track_ids)
         except Exception as e:

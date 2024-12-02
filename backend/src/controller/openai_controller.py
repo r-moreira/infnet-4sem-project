@@ -26,6 +26,18 @@ class OpenAiController:
         self.router.add_api_route("/playlist/lyrics/resume", self.get_playlist_lyrics_resume, methods=["POST"])
 
     async def get_chat_response(self, request: ChatRequest) -> ChatResponse:
+        """
+        Get chat response from OpenAI API
+        
+        Args:
+            request (ChatRequest): Chat request
+            
+        Returns:
+            Chat response from OpenAI API
+            
+        Raises:
+            HTTPException: If there is an error while getting chat response
+        """
         if self._config['local_llm']['enabled']:
             raise HTTPException(status_code=501, detail="Not Implemented")
         
@@ -37,6 +49,18 @@ class OpenAiController:
             raise HTTPException(status_code=500, detail=str(e))
         
     async def get_playlist_lyrics_resume(self, song_lyrics_info_list: List[SongLyricsInfo]) -> ChatResponse:
+        """
+        Get playlist lyrics resume
+        
+        Args:
+            song_lyrics_info_list (List[SongLyricsInfo]): List of song lyrics info
+            
+        Returns:
+            Playlist lyrics resume
+            
+        Raises:
+            HTTPException: If there is an error while getting playlist lyrics resume            
+        """
         if self._config['local_llm']['enabled']:
             raise HTTPException(status_code=501, detail="Not Implemented")
         
@@ -48,6 +72,18 @@ class OpenAiController:
             raise HTTPException(status_code=500, detail=str(e))
         
     async def get_playlist_audio_features_explanation(self, playlist_audio_features_request: PlaylistAudioFeaturesRequest) -> ChatResponse:
+        """
+        Get playlist audio features explanation
+        
+        Args:
+            playlist_audio_features_request (PlaylistAudioFeaturesRequest): Playlist audio features request
+            
+        Returns:
+            Playlist audio features explanation
+            
+        Raises:
+            HTTPException: If there is an error while getting playlist audio features explanation
+        """
         try:            
             if self._config['local_llm']['enabled']:
                 response = self._local_llm_service.get_playlist_audio_features_explanation(playlist_audio_features_request)       
@@ -60,6 +96,18 @@ class OpenAiController:
             raise HTTPException(status_code=500, detail=str(e))
         
     async def get_audio_features_explanation(self, track_audio_features_request: TrackAudioFeaturesRequest) -> ChatResponse:
+        """
+        Get audio features explanation
+        
+        Args:
+            track_audio_features_request (TrackAudioFeaturesRequest): Track audio features request
+            
+        Returns:
+            Audio features explanation
+            
+        Raises:
+            HTTPException: If there is an error while getting audio features explanation
+        """
         if self._config['local_llm']['enabled']:
             raise HTTPException(status_code=501, detail="Not Implemented")
         
