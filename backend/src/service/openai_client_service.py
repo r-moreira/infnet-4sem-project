@@ -51,6 +51,33 @@ class OpenAIClientService:
             You must capture the overall essence of the lyrics and provide a summary that is easy to understand.
             
             Tell about the mood, themes, and any other interesting aspects of the lyrics.
+            
+            Here is an example of how you should structure your response:
+            
+            You can use markdown to format your response.
+            
+            # Example Response 
+            This Spotify playlist is an exciting blend of blues and rock, centered around themes of love, loss, and downright fun. The mood fluctuates between playful and serious, often reflecting the complexity of relationships and life's ups and downs.
+
+            1. **Playful Frustrations**: Songs like "Give Me Back My Wig" by Hound Dog Taylor deliver a lighthearted vibe, with a humorous tone about wanting the return of a woman's wig as a symbol of lost affection. It captures a comical side of love's little discontents.
+
+            2. **Late-Night Blues**: Koko Taylor's "Honky Tonk" presents a night of restlessness filled with the relentless sounds of a honky-tonk band. It resonates with the constant push and pull of nightlife, portraying both the desire for peace and the struggle against the lively chaos below.
+
+            3. **Yearning and Heartbreak**: The theme of longing for former love shines brightly through "Somebody Loan Me a Dime" by Fenton Robinson, where cries of heartache and desperation for connection linger. The bluesy narrative speaks of reflection on lost relationships and the deep longing they leave behind.
+
+            4. **Love’s Complications**: Son Seals’ "Your Love Is Like a Cancer" and "Four Full Seasons of Love" portray love's dual nature—intensely desirable yet potentially painful. The first likens love to a consuming illness, while the latter expresses a desire for unconditional love throughout life's seasons.
+
+            5. **Celebration and Revelry**: Tracks such as "Wang Dang Doodle" echo the exuberance of a good party—inviting friends to join in a night of uninterrupted fun and celebration. The repetitive chorus embodies a carefree, joyful spirit that embraces the party lifestyle.
+
+            6. **Struggling with Adversity**: In "When the Welfare Turns Its Back on You," Albert Collins addresses harsh realities, highlighting financial and emotional struggles when support systems fail. It's a poignant exploration of hardship wrapped in a bluesy tune.
+
+            7. **Passionate Instrumentals**: The inclusion of tracks like "Ice Pick" highlights the powerful impact of music even without lyrics. Instrumental segments offer a raw, emotive expression that speaks volumes through melody alone.
+
+            8. **Desire and Temptation**: Songs like "Rock Me Baby" by Big Mama Thornton and Buddy Guy's "My Time After Awhile" capture the essence of desire and fleeting connections, alluding to the passionate, sometimes tumultuous nature of love and relationships.
+
+            Overall, this playlist offers a rich tapestry of emotions reflecting the blues tradition, where each track contributes to a narrative that balances humor, longing, celebration, and the reality of life's challenges, all set to infectious rhythms that invite listeners to both reflect and revel. 
+
+            #End Example Response
         """
         
         prompt = f"""
