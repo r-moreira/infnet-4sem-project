@@ -18,11 +18,11 @@ class GeniusSongLyricsScrapper:
         self._soup = BeautifulSoup(response.text, 'html.parser')
 
     def extract_lyrics(self) -> str | None:
-        instrumental_message = self.soup.select_one('div.LyricsPlaceholder__Message-uen8er-2')
+        instrumental_message = self.soup.select_one('div.LyricsPlaceholder-sc-99de6a4b-2')
         if instrumental_message and 'This song is an instrumental' in instrumental_message.text:
             return 'This song is an instrumental'
         
-        lyrics_div = self.soup.select_one('div[class*="Lyrics__Container"]')
+        lyrics_div = self.soup.select_one('div[data-lyrics-container="true"]')
         if not lyrics_div:
             return None
         
@@ -36,21 +36,21 @@ class GeniusSongLyricsScrapper:
         return ''.join(lyrics)
 
     def extract_song_name(self) -> str | None:
-        song_name_span = self.soup.select_one('h1 span[class*="SongHeaderdesktop__HiddenMask"]')
+        song_name_span = self.soup.select_one('h1 span[class*="SongHeader-desktop-sc-b6d678d2-11 dWLjHo"]')
         if not song_name_span:
             return None
         
         return song_name_span.text
     
     def extract_album_name(self) -> str | None:
-        album_name_div = self.soup.select_one('div.HeaderArtistAndTracklistdesktop__Tracklist-sc-4vdeb8-2 a')
+        album_name_div = self.soup.select_one('div.HeaderArtistAndTracklist-desktop-sc-dc27fea8-2 a')
         if not album_name_div:
             return None
         
         return album_name_div.text.strip()
     
     def extract_artist_name(self) -> str | None:
-        artist_name_div = self.soup.select_one('div.HeaderArtistAndTracklistdesktop__ListArtists-sc-4vdeb8-1 a')
+        artist_name_div = self.soup.select_one('div.HeaderArtistAndTracklist-desktop-sc-dc27fea8-1 span.PortalTooltip-sc-e6affa6e-1 a')
         if not artist_name_div:
             return None
         
